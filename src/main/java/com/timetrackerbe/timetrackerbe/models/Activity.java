@@ -2,6 +2,9 @@ package com.timetrackerbe.timetrackerbe.models;
 
 
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,11 +15,15 @@ public class Activity {
 	@Id
 	private String id;
 	private String activityName;
-	private Time startTime;
-	private Time endTime;
-	private Time trackedTime;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
+	private Long trackedTime;
 	
-	public Activity(String id, String activityName, Time startTime, Time endTime, Time trackedTime) {
+	//TODO - Något vettigare sett att hantera tiden 
+
+
+	public Activity(String id, String activityName) {
+
 		this.id = id;
 		this.activityName = activityName;
 		this.startTime = startTime;
@@ -40,28 +47,28 @@ public class Activity {
 		this.activityName = activityName;
 	}
 
-	public Time getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 
-	public Time getTrackedTime() {
+	public Long getTrackedTime() {
 		return trackedTime;
 	}
 
-	public void setTrackedTime(Time trackedTime) {
-		this.trackedTime = trackedTime;
+	public void setTrackedTime(long l) {
+		this.trackedTime = l;
 	}
 
 	
