@@ -18,6 +18,9 @@ public class Activity {
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
 	private Long trackedTime;
+
+	//kanske boolean?
+	// private boolean active;
 	
 	//TODO - Något vettigare sett att hantera tiden 
 
@@ -30,6 +33,18 @@ public class Activity {
 		this.endTime = endTime;
 		this.trackedTime = trackedTime;
 	}
+
+	public void setTrackedTime(Long trackedTime) {
+		this.trackedTime = trackedTime;
+	}
+
+	// public boolean isActive() {
+	// 	return active;
+	// }
+
+	// public void setActive(boolean active) {
+	// 	this.active = active;
+	// }
 
 	public String getId() {
 		return id;
