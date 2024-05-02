@@ -16,7 +16,7 @@ import com.timetrackerbe.timetrackerbe.services.ActivityService;
 
 
 @RestController
-@CrossOrigin(origins = "https://lobster-app-mdtis.ondigitalocean.app/")
+@CrossOrigin(origins = "*")
 public class ActivityController {
 
 	private ActivityService activityService;
