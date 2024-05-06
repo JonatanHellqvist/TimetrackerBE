@@ -39,7 +39,7 @@ public class ActivityController {
 	public List<Activity> getActivities() {
 		return activityService.getActivities();
 	}
-
+	
 	@PutMapping("/activity/start/{id}")
 	public String startActivity(@PathVariable String id) {
 		return activityService.startActivity(id);
