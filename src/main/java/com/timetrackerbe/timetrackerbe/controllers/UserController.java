@@ -49,7 +49,7 @@ public class UserController {
 		//kolla om user inte är null och password stämmer med getpassword för usern.
 		if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
 			
-			return ResponseEntity.ok("Sucessful login for user: " + loggedInUser.getUserName());
+			return ResponseEntity.ok(loggedInUser.getUserName());
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Username or password! Try again!");
 		}
