@@ -9,6 +9,7 @@ public class User {
 	private String id;
 	private String userName;
 	private String password;
+	private boolean isAdmin = false;
 	
 	public User(String id, String userName, String password) {
 		this.id = id;
@@ -38,6 +39,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 }

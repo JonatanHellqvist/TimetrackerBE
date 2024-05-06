@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timetrackerbe.timetrackerbe.models.User;
@@ -45,11 +46,17 @@ public class UserController {
 
 		
 		User loggedInUser = userService.getUserByUsername(user.getUserName());
+	
 
 		//kolla om user inte är null och password stämmer med getpassword för usern.
 		if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
-			
-			return ResponseEntity.ok(loggedInUser);
+
+			//test
+			if (loggedInUser.isAdmin()) {
+				return ResponseEntity.ok(loggedInUser);
+			} else {
+				return ResponseEntity.ok(loggedInUser);
+			} 
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
