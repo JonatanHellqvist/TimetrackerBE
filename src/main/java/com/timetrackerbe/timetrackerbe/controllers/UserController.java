@@ -41,7 +41,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/login")
-	public ResponseEntity<String> login(@RequestBody User user) {
+	public ResponseEntity<User> login(@RequestBody User user) {
 
 		
 		User loggedInUser = userService.getUserByUsername(user.getUserName());
@@ -49,9 +49,9 @@ public class UserController {
 		//kolla om user inte är null och password stämmer med getpassword för usern.
 		if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
 			
-			return ResponseEntity.ok(loggedInUser.getUserName());
+			return ResponseEntity.ok(loggedInUser);
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Username or password! Try again!");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
 	}
 }
