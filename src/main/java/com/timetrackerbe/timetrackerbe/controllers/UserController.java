@@ -1,7 +1,10 @@
 package com.timetrackerbe.timetrackerbe.controllers;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,5 +38,20 @@ public class UserController {
 	@GetMapping("/users")
 	public List<User> getUsers() {
 		return userService.getUsers();
+	}
+
+	@PostMapping("/user/login")
+	public String login(@RequestBody User user) {
+
+		
+		User loggedInUser = userService.getUserByUsername(user.getUserName());
+
+		//kolla om user inte är null och password stämmer med getpassword för usern.
+		if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
+			
+			return "lyckad inloggning" + loggedInUser.getUserName();
+		} else {
+			return ("invladid username or password");
+		}
 	}
 }

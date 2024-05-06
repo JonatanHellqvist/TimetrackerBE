@@ -36,4 +36,10 @@ public class UserService {
 		Query query = Query.query(Criteria.where("id").is(id));
 		mongoOperations.remove(query, User.class);
 	}
+
+	public User getUserByUsername(String username) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userName").is(username));
+		return mongoOperations.findOne(query, User.class);
+	}
 }
