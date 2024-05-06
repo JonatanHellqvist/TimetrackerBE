@@ -51,7 +51,7 @@ public class UserController {
 			
 			return "lyckad inloggning" + loggedInUser.getUserName();
 		} else {
-			return ("invladid username or password");
+			return "invalid username or password";
 		}
 	}
 }
