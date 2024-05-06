@@ -32,7 +32,7 @@ public class UserController {
 		return userService.getUser(id);
 	}
 
-	@GetMapping("/activities")
+	@GetMapping("/users")
 	public List<User> getUsers() {
 		return userService.getUsers();
 	}

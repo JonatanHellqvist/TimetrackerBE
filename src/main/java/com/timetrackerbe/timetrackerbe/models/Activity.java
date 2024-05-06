@@ -1,14 +1,10 @@
 package com.timetrackerbe.timetrackerbe.models;
 
-
-
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.mongodb.internal.connection.Time;
 
 @Document (collection = "Activities")
 public class Activity {
