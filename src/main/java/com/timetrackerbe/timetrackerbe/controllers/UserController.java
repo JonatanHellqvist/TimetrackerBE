@@ -49,9 +49,9 @@ public class UserController {
 		//kolla om user inte är null och password stämmer med getpassword för usern.
 		if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
 			
-			return "lyckad inloggning" + loggedInUser.getUserName();
+			return loggedInUser.getUserName();
 		} else {
-			return "invalid username or password";
+			return "{error}";
 		}
 	}
 }
