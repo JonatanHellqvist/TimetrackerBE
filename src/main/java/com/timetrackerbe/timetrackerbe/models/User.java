@@ -13,9 +13,9 @@ public class User {
 	private String userName;
 	private String password;
 	private boolean isAdmin = false;
-	private List<Activity> activityList = new ArrayList<>();
+	private List<Activity> activityList;
 	
-	private List<Activity> activityHistory = new ArrayList<>();
+	private List<Activity> activityHistory;
 	
 	public User(String id, String userName, String password) {
 		this.id = id;
