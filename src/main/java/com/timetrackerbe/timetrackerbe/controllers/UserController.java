@@ -51,7 +51,7 @@ public class UserController {
 			
 			return loggedInUser.getUserName();
 		} else {
-			return "{error}";
+			return "{\"error\": \"invalid username or password\"}";
 		}
 	}
 }
