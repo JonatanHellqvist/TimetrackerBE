@@ -81,6 +81,11 @@ public class UserController {
 		return userService.getUserActivities(userId);
 	}
 
+	@GetMapping ("/historylist/{userId}")
+	public List<Activity> getActivityHistory(@PathVariable String userId) {
+		return userService.getUserActivityHistory(userId);
+	}
+
 	//lägga till personlig aktivitet
 	@PostMapping("/{userId}/list/addactivity")
     public Activity addUserActivity(@PathVariable String userId, @RequestBody Activity activity) {
