@@ -170,6 +170,9 @@ public class UserService {
 						//uträkning för tid
 						Duration duration = Duration.between(activity.getStartTime(), activity.getEndTime());
 						long trackedDuration = duration.toMinutes();
+
+						Long newtotalTrackedTime = user.getTotalTrackedTime() + activity.getTrackedTime() + trackedDuration;
+
 						activity.setTrackedTime(activity.getTrackedTime() + trackedDuration);
 
 						activityList.remove(activity);
@@ -177,7 +180,8 @@ public class UserService {
 
 						user.setActivityList(activityList);
 						user.setActivityHistory(activityHistory);
-
+						user.setTotalTrackedTime(newtotalTrackedTime);
+						
 						mongoOperations.save(user);
 
 						return "{Activity: " + activity.getActivityName() + " stopped after " + trackedDuration + "minutes!}";
