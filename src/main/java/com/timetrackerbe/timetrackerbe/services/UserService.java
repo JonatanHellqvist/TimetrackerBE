@@ -168,7 +168,7 @@ public class UserService {
 						//uträkning för tid
 						Duration duration = Duration.between(activity.getStartTime(), activity.getEndTime());
 						long trackedDuration = duration.toMinutes();
-						activity.setTrackedTime(trackedDuration);
+						activity.setTrackedTime(activity.getTrackedTime() + trackedDuration);
 
 						activityList.remove(activity);
 						activityHistory.add(activity);
