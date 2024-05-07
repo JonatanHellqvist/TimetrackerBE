@@ -16,6 +16,7 @@ public class User {
 	private List<Activity> activityList;
 	
 	private List<Activity> activityHistory;
+	private String totalTrackedTime;
 	
 	public User(String id, String userName, String password) {
 		this.id = id;
@@ -37,6 +38,14 @@ public class User {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getTotalTrackedTime() {
+		return totalTrackedTime;
+	}
+
+	public void setTotalTrackedTime(String totalTrackedTime) {
+		this.totalTrackedTime = totalTrackedTime;
 	}
 
 	public String getUserName() {

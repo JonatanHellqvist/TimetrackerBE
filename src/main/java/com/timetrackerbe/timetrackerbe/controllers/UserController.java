@@ -112,6 +112,13 @@ public class UserController {
 		return userService.stopUserActivity(userId,activityId);
 	}
 
+
+	//totaltrackedtime
+
+	@GetMapping("/{$userId}/trackedtime")
+	public String getTotalTrackedTime (@PathVariable String userId) {
+		return userService.getUserTotalTrackedTime(userId);
+	}
 	// //delete
 	// @DeleteMapping("/activity/delete/{id}") 
 	// public String deleteActivity(@PathVariable String id) {

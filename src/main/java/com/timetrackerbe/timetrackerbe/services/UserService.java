@@ -90,6 +90,8 @@ public class UserService {
         }
         return null;
     }
+
+
 	// @PostMapping("/{userId}/list/addactivity")
     // public Activity addUserActivity(@PathVariable String userId, @RequestBody Activity activity) {
     //     return userService.addUserActivity(userId, activity);
@@ -189,8 +191,38 @@ public class UserService {
 		return  "{User not found}";
 	}
 		
-}
 
+
+
+//gettotaltrackedtime
+
+	public String getUserTotalTrackedTime(String userId) {
+
+		User user = mongoOperations.findById(userId, User.class);
+		String totalTrackedTime = "";
+
+		if (user != null) {
+			List <Activity> activityList = user.getActivityList();
+			List <Activity> activityHistory = user.getActivityHistory();
+
+			totalTrackedTime += addTotalTrackedTime(activityList);
+			totalTrackedTime += addTotalTrackedTime(activityHistory);
+
+			user.setTotalTrackedTime(totalTrackedTime);
+			mongoOperations.save(user);
+
+		}
+		return totalTrackedTime;
+	}
+
+	private int addTotalTrackedTime(List<Activity> activities) {
+		int totalTrackedTime = 0;
+		for (Activity activity : activities) {
+			totalTrackedTime += activity.getTrackedTime();
+		}
+		return totalTrackedTime;
+	}
+}
 // 	if (activity != null && activity.getStartTime() != null && activity.getEndTime() == null) {
 // 		activity.setEndTime(LocalDateTime.now());
 
