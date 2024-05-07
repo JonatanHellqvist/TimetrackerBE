@@ -199,7 +199,7 @@ public class UserService {
 	public Long getUserTotalTrackedTime(String userId) {
 
 		User user = mongoOperations.findById(userId, User.class);
-		Long totalTrackedTime = 1l;
+		Long totalTrackedTime = 0l;
 
 		if (user != null) {
 			List <Activity> activityList = user.getActivityList();
@@ -215,10 +215,16 @@ public class UserService {
 		return totalTrackedTime;
 	}
 
-	private int addTotalTrackedTime(List<Activity> activities) {
-		int totalTrackedTime = 0;
+	private Long addTotalTrackedTime(List<Activity> activities) {
+		Long totalTrackedTime = 0l;
 		for (Activity activity : activities) {
-			totalTrackedTime += activity.getTrackedTime();
+			Long trackedTime = activity.getTrackedTime();
+			// kollar så värdet inte är null innan det läggs till
+			if (trackedTime != null) {
+				totalTrackedTime += trackedTime;
+			}
+			
+			
 		}
 		return totalTrackedTime;
 	}
