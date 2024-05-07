@@ -16,7 +16,7 @@ public class User {
 	private List<Activity> activityList;
 	
 	private List<Activity> activityHistory;
-	private Long totalTrackedTime;
+	private Long totalTrackedTime = 0l;
 	
 	public User(String id, String userName, String password) {
 		this.id = id;

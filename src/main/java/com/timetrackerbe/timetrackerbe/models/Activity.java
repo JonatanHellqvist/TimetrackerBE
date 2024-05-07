@@ -13,7 +13,7 @@ public class Activity {
 	private String activityName;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
-	private Long trackedTime;
+	private Long trackedTime = 0l;
 
 	//kanske boolean?
 	// private boolean active;
