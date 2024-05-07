@@ -99,6 +99,12 @@ public class UserController {
 		return userService.startUserActivity(userId,activityId);
 	}
 
+	@PutMapping("/activity/start/{userId}/{activityId}")
+	public String startActivityFromHistory(@PathVariable String userId, @PathVariable String activityId) {
+		return userService.startUserActivityFromHistory(userId,activityId);
+	}
+
+
 	//stoppa
 
 	@PutMapping("/activity/stop/{userId}/{activityId}")

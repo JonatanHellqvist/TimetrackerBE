@@ -119,6 +119,31 @@ public class UserService {
 		return  "{User not found}";
 	}
 
+	//återuppta från historiken
+	public String startUserActivityFromHistory(String userId,String activityId) {
+
+		User user = mongoOperations.findById(userId, User.class);
+		if (user != null) {
+			List <Activity> activityHistory = user.getActivityHistory();
+			List <Activity> activityList = user.getActivityList();
+			for (Activity activity : activityHistory) {
+				if (activity.getId().equals(activityId)) {
+					
+						activity.setEndTime(null);
+						activity.setStartTime(LocalDateTime.now());
+						activityList.add(activity);
+						activityHistory.remove(activity);
+
+						mongoOperations.save(user);
+						return "{Activity: " + activity.getActivityName() + " started and moved to active}";
+					} 
+				}
+			
+			return "{Activity not found}";
+		} 
+		return  "{User not found}";
+	}
+
 	//stoppa
 
 	public String stopUserActivity(String userId,String activityId) {
