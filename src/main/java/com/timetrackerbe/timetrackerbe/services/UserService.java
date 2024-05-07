@@ -196,10 +196,10 @@ public class UserService {
 
 //gettotaltrackedtime
 
-	public String getUserTotalTrackedTime(String userId) {
+	public Long getUserTotalTrackedTime(String userId) {
 
 		User user = mongoOperations.findById(userId, User.class);
-		String totalTrackedTime = "";
+		Long totalTrackedTime = 1l;
 
 		if (user != null) {
 			List <Activity> activityList = user.getActivityList();

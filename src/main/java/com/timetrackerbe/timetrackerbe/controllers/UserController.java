@@ -116,7 +116,7 @@ public class UserController {
 	//totaltrackedtime
 
 	@GetMapping("/{$userId}/trackedtime")
-	public String getTotalTrackedTime (@PathVariable String userId) {
+	public Long getTotalTrackedTime (@PathVariable String userId) {
 		return userService.getUserTotalTrackedTime(userId);
 	}
 	// //delete
