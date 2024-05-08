@@ -154,10 +154,10 @@ public class UserService {
 		if (user != null) {
 
 			List <Activity> activityList = user.getActivityList();
-			List <Activity> activityHistory = user.getActivityHistory();
-			if (activityHistory == null) {
-				activityHistory = new ArrayList<>();
-			}
+			// List <Activity> activityHistory = user.getActivityHistory();
+			// if (activityHistory == null) {
+			// 	activityHistory = new ArrayList<>();
+			// }
 
 			for (Activity activity : activityList) {
 				if (activity.getId().equals(activityId)) {
@@ -174,11 +174,11 @@ public class UserService {
 						
 						activity.setTrackedTime(activity.getTrackedTime() + trackedDuration);
 
-						activityList.remove(activity);
-						activityHistory.add(activity);
+						// activityList.remove(activity);
+						// activityHistory.add(activity);
 
 						user.setActivityList(activityList);
-						user.setActivityHistory(activityHistory);
+						// user.setActivityHistory(activityHistory);
 						user.setTotalTrackedTime(newtotalTrackedTime);
 
 						mongoOperations.save(user);
@@ -276,4 +276,61 @@ public class UserService {
 		}
 		return totalTrackedTime;
 	}
+	public String moveUserActivityToHistory(String userId,String activityId) {
+		User user = mongoOperations.findById(userId,User.class);
+		if (user != null) {
+			List <Activity> activityHistory = user.getActivityHistory();
+			List <Activity> activityList = user.getActivityList();
+
+			Activity activityToMove = null;
+			for (Activity activity : activityList) {
+				if (activity.getId().equals(activityId)) {
+					activityToMove = activity;
+					break;
+				}
+			}
+
+			if (activityToMove != null) {
+				if (activityToMove.getStartTime() == null){
+					activityToMove.setStartTime(LocalDateTime.now());
+				} if (activityToMove.getEndTime() == null){
+					activityToMove.setEndTime(LocalDateTime.now());
+				}
+				activityList.remove(activityToMove);
+				activityHistory.add(activityToMove);
+				mongoOperations.save(user);
+				return "{Activity: " + activityToMove.getActivityName() + " moved to history}";
+			} else {
+				return "{Activity not found}";
+			}
+		} else {
+			return "{User not found}";
+		}			
+	}	
 }
+
+
+// public String startUserActivityFromHistory(String userId,String activityId) {
+
+// 	User user = mongoOperations.findById(userId, User.class);
+// 	if (user != null) {
+// 		List <Activity> activityHistory = user.getActivityHistory();
+// 		List <Activity> activityList = user.getActivityList();
+// 		for (Activity activity : activityHistory) {
+// 			if (activity.getId().equals(activityId)) {
+				
+// 					activity.setEndTime(null);
+// 					activity.setStartTime(LocalDateTime.now());
+// 					activityList.add(activity);
+// 					activityHistory.remove(activity);
+
+// 					mongoOperations.save(user);
+// 					return "{Activity: " + activity.getActivityName() + " started and moved to active}";
+// 				} 
+// 			}
+		
+// 		return "{Activity not found}";
+// 	} 
+// 	return  "{User not found}";
+// }
+
