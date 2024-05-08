@@ -134,11 +134,11 @@ public class UserController {
 
 	//delete
 
-	@DeleteMapping("/{userId}/{activityId}/activity/delete") 
+	@PutMapping("/{userId}/{activityId}/activity/delete") 
 	public String deleteActivity(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.deleteUserActivity(userId,activityId);
 	}
-	@DeleteMapping("/{userId}/{activityId}/activityhistory/delete") 
+	@PutMapping("/{userId}/{activityId}/activityhistory/delete") 
 	public String deleteActivityFromHistory(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.deleteUserActivityFromHistory(userId,activityId);
 	}
