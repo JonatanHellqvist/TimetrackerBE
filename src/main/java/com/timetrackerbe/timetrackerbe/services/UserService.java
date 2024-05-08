@@ -198,33 +198,47 @@ public class UserService {
 		User user = mongoOperations.findById(userId, User.class);
 		if (user != null) {
 			List <Activity> activityHistory = user.getActivityHistory();
+			boolean activityFound = false;
 			for (Activity activity : activityHistory) {
 				if (activity.getId().equals(activityId)) {
 						activityHistory.remove(activity);
-						user.setActivityHistory(activityHistory);
-						mongoOperations.save(user);		
-				} 
-			return "{Activity: " + activity.getActivityName() + " removed}";
+						activityFound = true;
+				break;			
+				}
 			}
-			return "{Activity not found}";	
-		} 
-		return "{User not found}";
+			if (activityFound) {
+				user.setActivityHistory(activityHistory);
+				mongoOperations.save(user);	
+				return "{ActivityId: " + activityId + " removed}";
+			} else {
+				return "{Activity not found}";	
+			}
+		} else {
+			return "{User not found}";
+		}	
 	}
 	public String deleteUserActivity(String userId,String activityId) {
 		User user = mongoOperations.findById(userId, User.class);
 		if (user != null) {
 			List <Activity> activityList = user.getActivityList();
+			boolean activityFound = false;
 			for (Activity activity : activityList) {
 				if (activity.getId().equals(activityId)) {
-						activityList.remove(activity);
-						user.setActivityList(activityList);
-						mongoOperations.save(user);		
-				} 
-			return "{Activity: " + activity.getActivityName() + " removed}";
+					activityList.remove(activity);
+					activityFound = true;
+				break;
+				}
 			}
-			return "{Activity not found}";	
-		} 
-		return "{User not found}";
+			if (activityFound) {
+				user.setActivityList(activityList);
+				mongoOperations.save(user);	
+				return "{ActivityId: " + activityId + " removed}";
+			} else {
+				return "{Activity not found}";	
+			}
+		} else {
+			return "{User not found}";
+		}	
 	}
 
 
