@@ -8,6 +8,7 @@ public class TimetrackerBeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TimetrackerBeApplication.class, args);
+		// TimeZone.setDefault(TimeZone.getTimeZone("Europe/Stockholm"));
 	}
 
 }

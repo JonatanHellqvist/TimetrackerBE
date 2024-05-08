@@ -25,9 +25,9 @@ public class Activity {
 
 		this.id = id;
 		this.activityName = activityName;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.trackedTime = trackedTime;
+		// this.startTime = startTime;
+		// this.endTime = endTime;
+		// this.trackedTime = trackedTime;
 	}
 
 	public void setTrackedTime(Long trackedTime) {

@@ -1,6 +1,4 @@
 package com.timetrackerbe.timetrackerbe.models;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;

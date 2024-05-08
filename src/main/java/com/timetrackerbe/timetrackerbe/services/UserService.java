@@ -9,9 +9,6 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.timetrackerbe.timetrackerbe.models.Activity;
 import com.timetrackerbe.timetrackerbe.models.User;
@@ -26,6 +23,7 @@ public class UserService {
 	
 	public List<User> getUsers() {
 		return mongoOperations.findAll(User.class);
+		
 	}
 
 	public User getUser(String id) {
@@ -109,6 +107,7 @@ public class UserService {
 				if (activity.getId().equals(activityId)) {
 					if (activity.getStartTime() == null) {
 						activity.setStartTime(LocalDateTime.now());
+						
 						mongoOperations.save(user);
 						return "{Activity: " + activity.getActivityName() + " started}";
 					} else {
@@ -195,7 +194,38 @@ public class UserService {
 		return  "{User not found}";
 	}
 		
-
+	public String deleteUserActivityFromHistory(String userId,String activityId) {
+		User user = mongoOperations.findById(userId, User.class);
+		if (user != null) {
+			List <Activity> activityHistory = user.getActivityHistory();
+			for (Activity activity : activityHistory) {
+				if (activity.getId().equals(activityId)) {
+						activityHistory.remove(activity);
+						user.setActivityHistory(activityHistory);
+						mongoOperations.save(user);		
+				} 
+			return "{Activity: " + activity.getActivityName() + " removed}";
+			}
+			return "{Activity not found}";	
+		} 
+		return "{User not found}";
+	}
+	public String deleteUserActivity(String userId,String activityId) {
+		User user = mongoOperations.findById(userId, User.class);
+		if (user != null) {
+			List <Activity> activityList = user.getActivityList();
+			for (Activity activity : activityList) {
+				if (activity.getId().equals(activityId)) {
+						activityList.remove(activity);
+						user.setActivityList(activityList);
+						mongoOperations.save(user);		
+				} 
+			return "{Activity: " + activity.getActivityName() + " removed}";
+			}
+			return "{Activity not found}";	
+		} 
+		return "{User not found}";
+	}
 
 
 //gettotaltrackedtime
@@ -233,22 +263,3 @@ public class UserService {
 		return totalTrackedTime;
 	}
 }
-// 	if (activity != null && activity.getStartTime() != null && activity.getEndTime() == null) {
-// 		activity.setEndTime(LocalDateTime.now());
-
-// 		Duration duration = Duration.between(activity.getStartTime(), activity.getEndTime());
-		
-// 		//Konvertera till timmar/minuter/sekund
-
-// 		//@@@@@@@@@@@@@ TODO fixa snyggare konvertering @@@@@@@@@@@@@
-// 		long trackedDuration = duration.toMinutes();
-
-
-// 		activity.setTrackedTime(trackedDuration);
-// 		mongoOperations.save(activity);
-
-// 		return "{Activity: " + activity.getActivityName() + " stopped after " + trackedDuration + "minutes!}";
-// 	} else {
-// 		return "{Activity: " + activity.getActivityName() + " is not started or already stopped}";
-// 	}}
-// }

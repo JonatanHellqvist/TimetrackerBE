@@ -1,7 +1,7 @@
 package com.timetrackerbe.timetrackerbe.controllers;
 
 import java.util.List;
-import java.util.Map;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timetrackerbe.timetrackerbe.models.Activity;
@@ -132,6 +131,17 @@ public class UserController {
 	// public Activity addActivity(@RequestBody Activity activity) {
 	// 	return activityService.addActivity(activity);
 	// }
+
+	//delete
+
+	@DeleteMapping("/{userId}/{activityId}/activity/delete") 
+	public String deleteActivity(@PathVariable String userId, @PathVariable String activityId) {
+		return userService.deleteUserActivity(userId,activityId);
+	}
+	@DeleteMapping("/{userId}/{activityId}/activityhistory/delete") 
+	public String deleteActivityFromHistory(@PathVariable String userId, @PathVariable String activityId) {
+		return userService.deleteUserActivityFromHistory(userId,activityId);
+	}
 
 	
 }
