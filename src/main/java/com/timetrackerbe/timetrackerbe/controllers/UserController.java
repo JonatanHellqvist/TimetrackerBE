@@ -79,6 +79,10 @@ public class UserController {
 	public String startActivity(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.startUserActivity(userId,activityId);
 	}
+	@PutMapping("/activity/reset/{userId}/{activityId}")
+	public String resetActivity(@PathVariable String userId, @PathVariable String activityId) {
+		return userService.resetAndStartUserActivity(userId,activityId);
+	}
 	@PutMapping("/activity/startactivity/{userId}/{activityId}")
 	public String startActivityFromHistory(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.startUserActivityFromHistory(userId,activityId);
