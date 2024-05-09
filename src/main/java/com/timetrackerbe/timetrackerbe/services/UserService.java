@@ -88,6 +88,7 @@ public class UserService {
         }
         return null;
     }
+
 	//starta
 
 	public String startUserActivity(String userId,String activityId) {
@@ -178,7 +179,7 @@ public class UserService {
 						long trackedDuration = duration.toMinutes();
 
 						activity.setTrackedTime(activity.getTrackedTime() + trackedDuration);
-						activity.setTotalTrackedTime(activity.getTotalTrackedTime() + activity.getTrackedTime()+trackedDuration);
+						activity.setTotalTrackedTime(activity.getTotalTrackedTime() + trackedDuration);
 						
 
 						Long newtotalTrackedTime = user.getTotalTrackedTime() + activity.getTrackedTime();
