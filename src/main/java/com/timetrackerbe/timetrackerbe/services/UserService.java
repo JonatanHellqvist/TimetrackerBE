@@ -290,14 +290,13 @@ public class UserService {
 				//uppdatera tracked time och avbryt
 				Duration duration = Duration.between(activityToMove.getStartTime(), activityToMove.getEndTime());
 				long trackedDuration = duration.toMinutes();
-				Long newtotalTrackedTime = user.getTotalTrackedTime() + activityToMove.getTrackedTime() + trackedDuration;
 
-				
-						
-				activityToMove.setTotalTrackedTime(activityToMove.getTrackedTime() + trackedDuration);
+				activityToMove.setTotalTrackedTime(activityToMove.getTotalTrackedTime() + trackedDuration);
+				Long newtotalTrackedTime = user.getTotalTrackedTime() + trackedDuration;
+				user.setTotalTrackedTime(newtotalTrackedTime);
 
 				activityToMove.setTrackedTime(null);
-				user.setTotalTrackedTime(newtotalTrackedTime);
+						
 				activityList.remove(activityToMove);
 				activityHistory.add(activityToMove);
 				mongoOperations.save(user);
