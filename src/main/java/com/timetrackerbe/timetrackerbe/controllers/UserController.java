@@ -14,6 +14,8 @@ import com.timetrackerbe.timetrackerbe.models.Activity;
 import com.timetrackerbe.timetrackerbe.models.User;
 import com.timetrackerbe.timetrackerbe.services.UserService;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -93,7 +95,8 @@ public class UserController {
 	}
 	@GetMapping("/{userId}/trackedtime")
 	public Long getTotalTrackedTime (@PathVariable String userId) {
-		return userService.getUserTotalTrackedTime(userId);
+		// return userService.getUserTotalTrackedTime(userId);
+		return null;
 	}
 	@PutMapping("/{userId}/{activityId}/activity/delete") 
 	public String deleteActivity(@PathVariable String userId, @PathVariable String activityId) {
@@ -107,6 +110,21 @@ public class UserController {
 	public String moveActivityToActivityHistory(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.moveUserActivityToHistory(userId,activityId);
 	}
-
+	@GetMapping("/{userId}/{activityId}/activity")
+	public Activity getUserActivityById(@PathVariable String userId,@PathVariable String activityId) {
+		return userService.getUserActivityById(userId, activityId);
+	}
+	// @GetMapping("/{userId}/{activityId}/activity/tottrackedtime")
+	// public Long getUserActivityTotalTrackedTime(@PathVariable String userId,@PathVariable String activityId) {
+	// 	return userService.getUserActivityTotalTrackedTime(userId,activityId);
+	// }
+	// @PutMapping("/{userId}/{activityId}/activity/getUserActivity")
+	// public void setUserActivityTotalTrackedTime(@PathVariable String userId,@PathVariable String activityId, @RequestParam Long trackedTime) {
+	// 	userService.setUserActivityTotalTrackedTime(userId, activityId, trackedTime);
+	// }
 	
 }
+	
+
+	
+

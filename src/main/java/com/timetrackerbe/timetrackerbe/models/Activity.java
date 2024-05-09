@@ -14,6 +14,7 @@ public class Activity {
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
 	private Long trackedTime = 0l;
+	private Long totalTrackedTime = 0l;
 
 	//kanske boolean?
 	// private boolean active;
@@ -41,6 +42,14 @@ public class Activity {
 	// public void setActive(boolean active) {
 	// 	this.active = active;
 	// }
+
+	public Long getTotalTrackedTime() {
+		return totalTrackedTime;
+	}
+
+	public void setTotalTrackedTime(Long totalTrackedTime) {
+		this.totalTrackedTime = totalTrackedTime;
+	}
 
 	public String getId() {
 		return id;

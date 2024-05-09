@@ -47,7 +47,7 @@ public class UserService {
 		query.addCriteria(Criteria.where("userName").is(username));
 		return mongoOperations.findOne(query, User.class);
 	}
-
+//ta bort
 	public User adminToggle(User user) {
         Query query = new Query();
 		query.addCriteria(Criteria.where("userName").is(user.getUserName()));
@@ -88,14 +88,6 @@ public class UserService {
         }
         return null;
     }
-
-
-	// @PostMapping("/{userId}/list/addactivity")
-    // public Activity addUserActivity(@PathVariable String userId, @RequestBody Activity activity) {
-    //     return userService.addUserActivity(userId, activity);
-    // }
-
-
 	//starta
 
 	public String startUserActivity(String userId,String activityId) {
@@ -144,9 +136,6 @@ public class UserService {
 			return "{User not found}";
 			} 
 	}
-
-	
-
 	//återuppta från historiken
 	public String startUserActivityFromHistory(String userId,String activityId) {
 
@@ -179,34 +168,23 @@ public class UserService {
 		User user = mongoOperations.findById(userId, User.class);
 
 		if (user != null) {
-
-			List <Activity> activityList = user.getActivityList();
-			// List <Activity> activityHistory = user.getActivityHistory();
-			// if (activityHistory == null) {
-			// 	activityHistory = new ArrayList<>();
-			// }
-
+			List<Activity> activityList = user.getActivityList();
 			for (Activity activity : activityList) {
 				if (activity.getId().equals(activityId)) {
 					if (activity.getEndTime() == null) {
 						activity.setEndTime(LocalDateTime.now());
 
-//@@@@@@@@@@@@@ TODO fixa snyggare konvertering @@@@@@@@@@@@@
-
-						//uträkning för tid
 						Duration duration = Duration.between(activity.getStartTime(), activity.getEndTime());
 						long trackedDuration = duration.toMinutes();
 
-						Long newtotalTrackedTime = user.getTotalTrackedTime() + activity.getTrackedTime() + trackedDuration;
-						
 						activity.setTrackedTime(activity.getTrackedTime() + trackedDuration);
+						activity.setTotalTrackedTime(activity.getTotalTrackedTime() + activity.getTrackedTime()+trackedDuration);
+						
 
-						// activityList.remove(activity);
-						// activityHistory.add(activity);
-
-						user.setActivityList(activityList);
-						// user.setActivityHistory(activityHistory);
+						Long newtotalTrackedTime = user.getTotalTrackedTime() + activity.getTrackedTime();
 						user.setTotalTrackedTime(newtotalTrackedTime);
+
+						activity.setTrackedTime(null);
 
 						mongoOperations.save(user);
 
@@ -214,13 +192,13 @@ public class UserService {
 					} else {
 						return "{Activity: " + activity.getActivityName() + " is not started or already stopped}";
 					}
+					}
 				}
-			} 
-			return "{Activity not found}";
-		} 
-		return  "{User not found}";
-	}
-		
+				return "{Activity not found}";
+			}
+			return "{User not found}";
+		}				
+
 	public String deleteUserActivityFromHistory(String userId,String activityId) {
 		User user = mongoOperations.findById(userId, User.class);
 		if (user != null) {
@@ -268,41 +246,27 @@ public class UserService {
 		}	
 	}
 
-
-//gettotaltrackedtime
-
-	public Long getUserTotalTrackedTime(String userId) {
-
-		User user = mongoOperations.findById(userId, User.class);
-		Long totalTrackedTime = 0l;
-
+	//getuseractivitrybyid
+	public Activity getUserActivityById(String userId, String activityId) {
+		User user = mongoOperations.findById(userId,User.class);
 		if (user != null) {
-			List <Activity> activityList = user.getActivityList();
-			List <Activity> activityHistory = user.getActivityHistory();
 
-			totalTrackedTime += addTotalTrackedTime(activityList);
-			totalTrackedTime += addTotalTrackedTime(activityHistory);
-
-			user.setTotalTrackedTime(totalTrackedTime);
-			mongoOperations.save(user);
-
-		}
-		return totalTrackedTime;
-	}
-
-	private Long addTotalTrackedTime(List<Activity> activities) {
-		Long totalTrackedTime = 0l;
-		for (Activity activity : activities) {
-			Long trackedTime = activity.getTrackedTime();
-			// kollar så värdet inte är null innan det läggs till
-			if (trackedTime != null) {
-				totalTrackedTime += trackedTime;
+			//kollar activityList
+			for(Activity activity : user.getActivityList()) {
+				if (activity.getId().equals(activityId)) {
+					return activity;
+				}
 			}
-			
-			
+			//kollar historyList
+			for(Activity activity : user.getActivityHistory()) {
+				if (activity.getId().equals(activityId)) {
+					return activity;
+				}
+			}
 		}
-		return totalTrackedTime;
+		return null;
 	}
+
 	public String moveUserActivityToHistory(String userId,String activityId) {
 		User user = mongoOperations.findById(userId,User.class);
 		if (user != null) {
@@ -326,8 +290,12 @@ public class UserService {
 				Duration duration = Duration.between(activityToMove.getStartTime(), activityToMove.getEndTime());
 				long trackedDuration = duration.toMinutes();
 				Long newtotalTrackedTime = user.getTotalTrackedTime() + activityToMove.getTrackedTime() + trackedDuration;
+
+				
 						
-				activityToMove.setTrackedTime(activityToMove.getTrackedTime() + trackedDuration);
+				activityToMove.setTotalTrackedTime(activityToMove.getTrackedTime() + trackedDuration);
+
+				activityToMove.setTrackedTime(null);
 				user.setTotalTrackedTime(newtotalTrackedTime);
 				activityList.remove(activityToMove);
 				activityHistory.add(activityToMove);
