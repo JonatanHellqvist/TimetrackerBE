@@ -1,4 +1,5 @@
 package com.timetrackerbe.timetrackerbe.models;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -20,9 +21,9 @@ public class User {
 	private String passwordHash;
 
 	private boolean isAdmin = false;
-	private List<Activity> activityList;
+	private List<Activity> activityList = new ArrayList<>();
 	
-	private List<Activity> activityHistory;
+	private List<Activity> activityHistory = new ArrayList<>();
 	private Long totalTrackedTime = 0l;
 	
 	public User(String id, String userName, String password) {
