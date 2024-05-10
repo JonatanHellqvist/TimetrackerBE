@@ -2,6 +2,7 @@ package com.timetrackerbe.timetrackerbe.controllers;
 
 import java.util.List;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,14 +15,12 @@ import com.timetrackerbe.timetrackerbe.models.Activity;
 import com.timetrackerbe.timetrackerbe.models.User;
 import com.timetrackerbe.timetrackerbe.services.UserService;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @CrossOrigin(origins = "*")
 public class UserController {
 	
-	private UserService userService;
+	UserService userService;
 
 	public UserController(UserService userService) {
 		this.userService = userService;
@@ -43,27 +42,16 @@ public class UserController {
 	}
 
 	@PostMapping("/user/login")
-	public ResponseEntity<User> login(@RequestBody User user) {
-		User loggedInUser = userService.getUserByUsername(user.getUserName());
-		//kolla om user inte är null och password stämmer med getpassword för usern.
-		if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
-
-			//test
-			if (loggedInUser.isAdmin()) {
-				return ResponseEntity.ok(loggedInUser);
-			} else {
-				return ResponseEntity.ok(loggedInUser);
-			} 
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
-	}
-
-	//ta bort sen bara för att testa
-	@PutMapping("admin/toggle")
-	public User adminToggle (@RequestBody User user) {
-		return userService.adminToggle(user);
-	}
+    public ResponseEntity<User> login(@RequestBody User user) {
+        User loggedInUser = userService.getUserByUsername(user.getUserName());
+        
+        //kolla om user inte är null och password stämmer med getpassword för usern. veryfypassword metod för att kolla mot bcrypt
+        if (loggedInUser != null && userService.verifyPassword(user.getPassword(), loggedInUser.getPassword())) {
+            return ResponseEntity.ok(loggedInUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
 	//personliga listan
 	@GetMapping ("/{userId}/list/")
 	public List<Activity> getUserActivities(@PathVariable String userId) {
@@ -122,7 +110,6 @@ public class UserController {
 	// public void setUserActivityTotalTrackedTime(@PathVariable String userId,@PathVariable String activityId, @RequestParam Long trackedTime) {
 	// 	userService.setUserActivityTotalTrackedTime(userId, activityId, trackedTime);
 	// }
-	
 }
 	
 

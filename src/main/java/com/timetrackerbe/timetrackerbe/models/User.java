@@ -4,12 +4,21 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Document (collection = "Users")
 public class User {
 	@Id
 	private String id;
 	private String userName;
+
+	//Json ignore för att inte skicka med det i json responset jsonproperty på settern
+	@JsonIgnore
 	private String password;
+	@JsonIgnore
+	private String passwordHash;
+
 	private boolean isAdmin = false;
 	private List<Activity> activityList;
 	
@@ -54,16 +63,25 @@ public class User {
 		this.userName = userName;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
-
+	@JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	public boolean isAdmin() {
 		return isAdmin;
+	}
+	@JsonIgnore
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+	@JsonProperty
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	public void setAdmin(boolean isAdmin) {

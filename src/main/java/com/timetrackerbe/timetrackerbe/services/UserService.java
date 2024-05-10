@@ -8,6 +8,9 @@ import java.util.List;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.timetrackerbe.timetrackerbe.models.Activity;
@@ -16,11 +19,17 @@ import com.timetrackerbe.timetrackerbe.models.User;
 @Service
 public class UserService {
 	private final MongoOperations mongoOperations;
+	
+	PasswordEncoder passwordEncoder;
 
 	public UserService(MongoOperations mongoOperations) {
 		this.mongoOperations = mongoOperations;
+		this.passwordEncoder = new BCryptPasswordEncoder();
 	}
 	
+	public boolean verifyPassword(String inputPassword, String storedHashedPassword) {
+        return BCrypt.checkpw(inputPassword, storedHashedPassword);
+    }
 	public List<User> getUsers() {
 		return mongoOperations.findAll(User.class);
 		
@@ -34,6 +43,8 @@ public class UserService {
 	}
 	
 	public User addUser(User user) {
+		String passwordHash = passwordEncoder.encode(user.getPassword());
+		user.setPassword(passwordHash);
 		return mongoOperations.insert(user);
 	}
 
