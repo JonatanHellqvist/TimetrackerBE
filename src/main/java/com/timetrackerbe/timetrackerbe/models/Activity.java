@@ -16,32 +16,15 @@ public class Activity {
 	private Long trackedTime = 0l;
 	private Long totalTrackedTime = 0l;
 
-	//kanske boolean?
-	// private boolean active;
-	
-	//TODO - Något vettigare sett att hantera tiden 
-
-
 	public Activity(String id, String activityName) {
 
 		this.id = id;
 		this.activityName = activityName;
-		// this.startTime = startTime;
-		// this.endTime = endTime;
-		// this.trackedTime = trackedTime;
 	}
 
 	public void setTrackedTime(Long trackedTime) {
 		this.trackedTime = trackedTime;
 	}
-
-	// public boolean isActive() {
-	// 	return active;
-	// }
-
-	// public void setActive(boolean active) {
-	// 	this.active = active;
-	// }
 
 	public Long getTotalTrackedTime() {
 		return totalTrackedTime;
@@ -89,7 +72,5 @@ public class Activity {
 
 	public void setTrackedTime(long l) {
 		this.trackedTime = l;
-	}
-
-	
+	}	
 }

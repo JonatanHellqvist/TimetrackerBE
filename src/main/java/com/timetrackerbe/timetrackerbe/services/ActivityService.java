@@ -58,16 +58,11 @@ public class ActivityService {
 			activity.setEndTime(LocalDateTime.now());
 
 			Duration duration = Duration.between(activity.getStartTime(), activity.getEndTime());
-			
-			//Konvertera till timmar/minuter/sekund
-
+			//Konvertera till timmar/minuter/sekunder
 			//@@@@@@@@@@@@@ TODO fixa snyggare konvertering @@@@@@@@@@@@@
 			long trackedDuration = duration.toMinutes();
-
-
 			activity.setTrackedTime(trackedDuration);
 			mongoOperations.save(activity);
-
 			return "{Activity: " + activity.getActivityName() + " stopped after " + trackedDuration + "minutes!}";
 		} else {
 			return "{Activity: " + activity.getActivityName() + " is not started or already stopped}";

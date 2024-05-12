@@ -96,5 +96,4 @@ public class User {
 	public void setActivityList(List<Activity> activityList) {
 		this.activityList = activityList;
 	}
-	
 }

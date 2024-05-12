@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.timetrackerbe.timetrackerbe.models.Activity;
 import com.timetrackerbe.timetrackerbe.services.ActivityService;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 public class ActivityController {
@@ -44,7 +43,6 @@ public class ActivityController {
 		return activityService.startActivity(id);
 	}
 	
-
 	@PutMapping("/activity/stop/{id}")
 	public String stopActivity(@PathVariable String id) {
 		return activityService.stopActivity(id);

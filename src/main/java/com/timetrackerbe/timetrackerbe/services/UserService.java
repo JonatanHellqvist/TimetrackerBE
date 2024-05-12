@@ -59,15 +59,13 @@ public class UserService {
 		return mongoOperations.findOne(query, User.class);
 	}
 //ta bort
-	public User adminToggle(User user) {
-        Query query = new Query();
-		query.addCriteria(Criteria.where("userName").is(user.getUserName()));
-        user.setAdmin(!user.isAdmin());
-        mongoOperations.save(user);
-        return user;
-    }
-
-
+	// public User adminToggle(User user) {
+    //     Query query = new Query();
+	// 	query.addCriteria(Criteria.where("userName").is(user.getUserName()));
+    //     user.setAdmin(!user.isAdmin());
+    //     mongoOperations.save(user);
+    //     return user;
+    // }
 	public List<Activity> getUserActivities(String userId) {
         User user = mongoOperations.findById(userId, User.class);
         if (user != null) {
@@ -75,7 +73,6 @@ public class UserService {
         }
         return null;
     }
-
 	public List <Activity> getUserActivityHistory(String userId) {
 		User user = mongoOperations.findById(userId, User.class);
 		if (user != null) {
@@ -83,7 +80,6 @@ public class UserService {
         }
         return null;
 	}
-
 	public Activity addUserActivity(String userId, Activity activity) {
         User user = mongoOperations.findById(userId, User.class);
         if (user != null) {
@@ -99,9 +95,6 @@ public class UserService {
         }
         return null;
     }
-
-	//starta
-
 	public String startUserActivity(String userId,String activityId) {
 
 		User user = mongoOperations.findById(userId, User.class);
@@ -172,9 +165,7 @@ public class UserService {
 		} 
 		return  "{User not found}";
 	}
-
-	//stoppa
-
+	
 	public String stopUserActivity(String userId,String activityId) {
 
 		User user = mongoOperations.findById(userId, User.class);
@@ -258,18 +249,16 @@ public class UserService {
 		}	
 	}
 
-	//getuseractivitrybyid
 	public Activity getUserActivityById(String userId, String activityId) {
 		User user = mongoOperations.findById(userId,User.class);
 		if (user != null) {
 
-			//kollar activityList
 			for(Activity activity : user.getActivityList()) {
 				if (activity.getId().equals(activityId)) {
 					return activity;
 				}
 			}
-			//kollar historyList
+			
 			for(Activity activity : user.getActivityHistory()) {
 				if (activity.getId().equals(activityId)) {
 					return activity;

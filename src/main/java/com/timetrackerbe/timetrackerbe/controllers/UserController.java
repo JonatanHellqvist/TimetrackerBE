@@ -81,11 +81,11 @@ public class UserController {
 	public String stopActivity(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.stopUserActivity(userId,activityId);
 	}
-	@GetMapping("/{userId}/trackedtime")
-	public Long getTotalTrackedTime (@PathVariable String userId) {
-		// return userService.getUserTotalTrackedTime(userId);
-		return null;
-	}
+	// @GetMapping("/{userId}/trackedtime")
+	// public Long getTotalTrackedTime (@PathVariable String userId) {
+	// 	// return userService.getUserTotalTrackedTime(userId);
+	// 	return null;
+	// }
 	@PutMapping("/{userId}/{activityId}/activity/delete") 
 	public String deleteActivity(@PathVariable String userId, @PathVariable String activityId) {
 		return userService.deleteUserActivity(userId,activityId);
